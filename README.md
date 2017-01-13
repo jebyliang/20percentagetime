@@ -1,3 +1,3 @@
 # for_fun
 
-## winter break project: Jobs_Seeker
+## 1. winter break: Jobs_Seeker (Yes! make it before quarter begin!)

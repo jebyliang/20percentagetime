@@ -31,7 +31,7 @@ for item in company_list:
 # Create a Pandas dataframe from the data.
 df = pd.DataFrame({'Position': positions, 'City': cities, 'Company': companies})
 df.insert(0, "ID", df.index)
-df1 = df[df.Position.str.contains("Data|Analyst") == True]
+df1 = df[df.Position.str.contains("Data") == True]
 
 # Create a Pandas Excel writer using XlsxWriter as the engine.
 writer = pd.ExcelWriter('Jobs_seeker_1.xlsx', engine='xlsxwriter')

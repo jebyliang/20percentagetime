@@ -1,38 +1,38 @@
-q3 <- read.csv("~/desktop/metrobike/Q3_2016.csv", header = T)
-q4 <- read.csv("~/desktop/metrobike/Q4_2016.csv", header = T)
-stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
+> q3 <- read.csv("~/desktop/metrobike/Q3_2016.csv", header = T)
+> q4 <- read.csv("~/desktop/metrobike/Q4_2016.csv", header = T)
+> stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
 
-sum(is.na(q3$end_lat))
-sum(is.na(q3$end_lon))
+> sum(is.na(q3$end_lat))
+> sum(is.na(q3$end_lon))
 
-sum(is.na(q4$end_lat))
-sum(is.na(q4$end_lon))
+> sum(is.na(q4$end_lat))
+> sum(is.na(q4$end_lon))
 ## 487 bikes are stolen in Q4 2016 because no location ending record
 
-addmargins(table(q3$trip_route_category))
+> addmargins(table(q3$trip_route_category))
 
    One Way Round Trip        Sum 
      49827       5612      55439 
      
-addmargins(table(q4$trip_route_category))
+> addmargins(table(q4$trip_route_category))
 
    One Way Round Trip        Sum 
      39172       4030      43202 
 ## amount of bike share customers descrease from Q3 to Q4, one of potential explanation is people seems like to have a taste about what LA metro bike looks like.
 
-prop.table(table(q3$trip_route_category))
+> prop.table(table(q3$trip_route_category))
 
    One Way Round Trip 
  0.8987716  0.1012284 
  
-prop.table(table(q4$trip_route_category))
+> prop.table(table(q4$trip_route_category))
 
    One Way Round Trip 
 0.90671728 0.09328272
 
 ## percentage of one way customers seems increase, apply the two sample proportion test.
 
-prop.test(x=c(49827, 39172), n=c(55439, 43202))
+> prop.test(x=c(49827, 39172), n=c(55439, 43202))
 
 	2-sample test for equality of proportions
 	with continuity correction
@@ -48,4 +48,30 @@ sample estimates:
 
 ## result suggest that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
 
+> addmargins(table(q3$passholder_type))
 
+   Flex Pass Monthly Pass      Walk-up          Sum 
+        4431        33216        17792        55439 
+	
+> addmargins(table(q4$passholder_type))
+
+   Flex Pass Monthly Pass Staff Annual      Walk-up       Sum
+        2794        27081          382        12945     43202          
+
+## Bike share program provider one more subscription option called "Staff Annual", which is unpublized.
+
+> prop.test(x=c(17792, 12945), n=c(55439, 43202))
+
+	2-sample test for equality of proportions
+	with continuity correction
+
+data:  c(17792, 12945) out of c(55439, 43202)
+X-squared = 51.209, df = 1, p-value = 8.303e-13
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ 0.01545939 0.02712142
+sample estimates:
+   prop 1    prop 2 
+0.3209293 0.2996389 
+
+## two sample proportion test suggest that the percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.

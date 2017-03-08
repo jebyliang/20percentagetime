@@ -20,3 +20,32 @@ addmargins(table(q4$trip_route_category))
      39172       4030      43202 
 ## amount of bike share customers descrease from Q3 to Q4, one of potential explanation is people seems like to have a taste about what LA metro bike looks like.
 
+prop.table(table(q3$trip_route_category))
+
+   One Way Round Trip 
+ 0.8987716  0.1012284 
+ 
+prop.table(table(q4$trip_route_category))
+
+   One Way Round Trip 
+0.90671728 0.09328272
+
+## percentage of one way customers seems increase, apply the two sample proportion test.
+
+prop.test(x=c(49827, 39172), n=c(55439, 43202))
+
+	2-sample test for equality of proportions
+	with continuity correction
+
+data:  c(49827, 39172) out of c(55439, 43202)
+X-squared = 17.291, df = 1, p-value = 3.206e-05
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.01168446 -0.00420686
+sample estimates:
+   prop 1    prop 2 
+0.8987716 0.9067173
+
+## result suggest that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
+
+

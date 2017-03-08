@@ -1,1 +1,22 @@
+q3 <- read.csv("~/desktop/metrobike/Q3_2016.csv", header = T)
+q4 <- read.csv("~/desktop/metrobike/Q4_2016.csv", header = T)
+stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
+
+sum(is.na(q3$end_lat))
+sum(is.na(q3$end_lon))
+
+sum(is.na(q4$end_lat))
+sum(is.na(q4$end_lon))
+## 487 bikes are stolen in Q4 2016 because no location ending record
+
+addmargins(table(q3$trip_route_category))
+
+   One Way Round Trip        Sum 
+     49827       5612      55439 
+     
+addmargins(table(q4$trip_route_category))
+
+   One Way Round Trip        Sum 
+     39172       4030      43202 
+## amount of bike share customers descrease from Q3 to Q4, one of potential explanation is people seems like to have a taste about what LA metro bike looks like.
 

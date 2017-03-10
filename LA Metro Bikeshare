@@ -75,3 +75,38 @@ sample estimates:
 0.3209293 0.2996389 
 
 ## two sample proportion test suggest that the percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.
+
+> q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+Source: local data frame [64 x 2]
+
+   start_station_id     n
+              <int> <int>
+1              3030  2198
+2              3069  2128
+3              3014  2055
+4              3005  1904
+5              3031  1888
+6              3064  1858
+7              3042  1807
+8              3067  1640
+9              3022  1526
+10             3035  1483
+..              ...   ...
+
+> q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+Source: local data frame [63 x 2]
+
+   start_station_id     n
+             <fctr> <int>
+1              3005  1729
+2              3082  1648
+3              3069  1629
+4              3030  1618
+5              3031  1587
+6              3064  1561
+7              3014  1465
+8              3067  1301
+9              3022  1280
+10             3055  1161
+..              ...   ...
+> 

@@ -1,4 +1,4 @@
-## 416: using 1/24 of day 
+## 416:
 
 ### 1. winter break: Jobs_Seeker (Yes! make it before quarter begin!)
 

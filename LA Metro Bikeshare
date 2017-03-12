@@ -77,40 +77,61 @@ sample estimates:
 ## two sample proportion test suggest that the percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.
 
 ## here is list of top 10 busy stations for Q3
-> q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
-Source: local data frame [64 x 2]
+> q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+> colnames(q3_busy) <- c("Station.ID", "Use.Count")
+> q3_busy$Station.ID <- as.character(q3_busy$Station.ID)
+> stations$Station.ID <- as.character(stations$Station.ID)
+> left_join(q3_busy, stations, by = "Station.ID")[1:10,]
+Source: local data frame [10 x 5]
 
-   start_station_id     n
-              <int> <int>
-1              3030  2198
-2              3069  2128
-3              3014  2055
-4              3005  1904
-5              3031  1888
-6              3064  1858
-7              3042  1807
-8              3067  1640
-9              3022  1526
-10             3035  1483
-..              ...   ...
+   Station.ID Use.Count                 Station.Name
+        <chr>     <int>                       <fctr>
+1        3030      2198  Main & 1st                 
+2        3069      2128  Broadway & 3rd             
+3        3014      2055  Union Station West Portal  
+4        3005      1904  Flower & 7th               
+5        3031      1888  7th & Spring               
+6        3064      1858  Grand & 7th                
+7        3042      1807  1st & Central              
+8        3067      1640  Main & 6th                 
+9        3022      1526  3rd & Santa Fe             
+10       3035      1483  Figueroa & 8th  
 
 ## here is list of top 10 busy stations for Q4
-> q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
-Source: local data frame [63 x 2]
+> q4_busy <- q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+> colnames(q4_busy) <- c("Station.ID", "Use.Count")
+> q4_busy$Station.ID <- as.character(q4_busy$Station.ID)
+> left_join(q4_busy, stations, by = "Station.ID")[1:10]
+Source: local data frame [63 x 10]
 
-   start_station_id     n
-             <fctr> <int>
-1              3005  1729
-2              3082  1648
-3              3069  1629
-4              3030  1618
-5              3031  1587
-6              3064  1561
-7              3014  1465
-8              3067  1301
-9              3022  1280
-10             3055  1161
-..              ...   ...
+   Station.ID Use.Count                 Station.Name
+        <chr>     <int>                       <fctr>
+1        3005      1729  Flower & 7th               
+2        3082      1648  Traction & Rose            
+3        3069      1629  Broadway & 3rd             
+4        3030      1618  Main & 1st                 
+5        3031      1587  7th & Spring               
+6        3064      1561  Grand & 7th                
+7        3014      1465  Union Station West Portal  
+8        3067      1301  Main & 6th                 
+9        3022      1280  3rd & Santa Fe             
+10       3055      1161  7th & Main
+
+## change of top 10 busy station from q3 to q4
+> q3_busy <- left_join(q3_busy, stations, by = "Station.ID")[1:10,]
+> q4_busy <- left_join(q4_busy, stations, by = "Station.ID")[1:10,]
+> data.frame(q3_busy$Station.Name, q4_busy$Station.Name)
+           q3_busy.Station.Name         q4_busy.Station.Name
+1   Main & 1st                   Flower & 7th               
+2   Broadway & 3rd               Traction & Rose            
+3   Union Station West Portal    Broadway & 3rd             
+4   Flower & 7th                 Main & 1st                 
+5   7th & Spring                 7th & Spring               
+6   Grand & 7th                  Grand & 7th                
+7   1st & Central                Union Station West Portal  
+8   Main & 6th                   Main & 6th                 
+9   3rd & Santa Fe               3rd & Santa Fe             
+10  Figueroa & 8th               7th & Main  
 
 ## check out which bike stations are easy to be stolen bicycle
 > sort(table(q4$start_station_id[which(is.na(q4$end_lat)==T)]), decreasing=T)
@@ -130,21 +151,23 @@ Source: local data frame [63 x 2]
 3080 3081 4108 
    0    0    0 
 
-#
+## day of week distribution for Q3
 > addmargins(table(weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))))
 
    Friday    Monday  Saturday    Sunday  Thursday   Tuesday 
      9014      7064      7526      7154      8823      7939 
 Wednesday       Sum 
      7919     55439 
-     
+
+## day of week distribution for Q4
 > addmargins(table(weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))))
 
    Friday    Monday  Saturday    Sunday  Thursday   Tuesday 
      6251      5852      5973      5783      6412      6362 
 Wednesday       Sum 
      6569     43202 
-     
+
+## two sample proportion test supports that percentage of bike share customers did increase from Q3 tp Q4
 > prop.test(x=c(7526+7154, 5973+5783), n=c(55439, 43202))
 
 	2-sample test for equality of proportions with

@@ -6,3 +6,5 @@
 
 ### 3. Adjust LA Metro's bike share program by evaluating data report. (program begun since 7/7/2016)
 ![Q3 2016 Stations Customers Count](https://github.com/jebyliang/Images/blob/master/q3_start.png)
+
+![Q4 2016 Stations Customers Count](https://github.com/jebyliang/Images/blob/master/q4_start.png)

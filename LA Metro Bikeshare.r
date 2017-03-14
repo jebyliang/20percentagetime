@@ -185,4 +185,4 @@ sample estimates:
 > dtla <- get_map(location = 'Downtown LA', zoom = 14)
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q3, alpha = 0.5, color = 'orange')
      
-
+![](https://www.dropbox.com/s/7r95jmwxt7rgvwp/q3_start.png?dl=0)

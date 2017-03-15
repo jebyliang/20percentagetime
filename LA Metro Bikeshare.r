@@ -152,20 +152,21 @@ Source: local data frame [63 x 10]
    0    0    0 
 
 ## day of week distribution for Q3
-> addmargins(table(weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))))
+> addmargins(table(weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
 
-   Friday    Monday  Saturday    Sunday  Thursday   Tuesday 
-     9014      7064      7526      7154      8823      7939 
-Wednesday       Sum 
-     7919     55439 
+   Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
+     7064      7939      7919      8823      9014      7526 
+   Sunday       Sum 
+     7154     55439
 
 ## day of week distribution for Q4
-> addmargins(table(weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))))
+> addmargins(table(weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
 
-   Friday    Monday  Saturday    Sunday  Thursday   Tuesday 
-     6251      5852      5973      5783      6412      6362 
-Wednesday       Sum 
-     6569     43202 
+   Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
+     5852      6362      6569      6412      6251      5973 
+   Sunday       Sum 
+     5783     43202 
+
 
 ## two sample proportion test supports that percentage of bike share customers did increase from Q3 tp Q4
 > prop.test(x=c(7526+7154, 5973+5783), n=c(55439, 43202))

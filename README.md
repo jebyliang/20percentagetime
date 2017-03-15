@@ -8,3 +8,11 @@
 ![Q3 2016 Stations Customers Count](https://github.com/jebyliang/Images/blob/master/q3_start.png)
 
 ![Q4 2016 Stations Customers Count](https://github.com/jebyliang/Images/blob/master/q4_start.png)
+
+![](https://github.com/jebyliang/Images/blob/master/mosaic%20q3.png)
+
+![](https://github.com/jebyliang/Images/blob/master/mosaic%20q4.png)
+
+![](https://github.com/jebyliang/Images/blob/master/hour%20q34.png)
+
+![](https://github.com/jebyliang/Images/blob/master/weekdays%20q34.png)

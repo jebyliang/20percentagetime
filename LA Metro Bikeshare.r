@@ -209,3 +209,30 @@ sample estimates:
 > ggplot(data = dat) +
 + geom_bar(mapping = aes(x = wd, fill = season), position = "dodge") +
 + ggtitle('weekdays distribution between Q3 & Q4 (side by side)')
+
+## save the Downtown LA map
+dtla <- get_map(location = 'Downtown LA', zoom = 14)
+g <- ggmap(dtla)
+
+## let's get the fluid map for Q3
+> fluid_q3 <- data.frame(lat = c(q3$start_lat, q3$end_lat),
++ lon = c(q3$start_lon, q3$end_lon),
++ case = as.character(rep(1:dim(q3)[1], 2)),
++ wd = rep(q3$wd, 2))
+
+> g + 
++   facet_wrap(~ wd, ncol = 2) +
++   geom_point(data = fluid_q3, aes(x = lon, y = lat), color = "black", size = 1) +
++   geom_line(data = fluid_q3, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
++   ggtitle('Fluid map for Q3')
+
+> fluid_q4 <- data.frame(lat = c(q4$start_lat, q4$end_lat),
++ lon = c(q4$start_lon, q4$end_lon),
++ case = as.character(rep(1:dim(q4)[1], 2)),
++ wd = rep(q4$wd, 2))
+
+> g + 
++   facet_wrap(~ wd, ncol = 2) +
++   geom_point(data = fluid_q4, aes(x = lon, y = lat), color = "black", size = 1) +
++   geom_line(data = fluid_q4, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
++   ggtitle('Fluid map for Q4')

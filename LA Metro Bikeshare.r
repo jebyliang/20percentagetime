@@ -190,6 +190,22 @@ sample estimates:
 > q4$wd <- weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))
 > q3$hour <- strptime(q3$start_time, format = '%m/%d/%Y %H:%M')[[3]]
 > q4$hour <- strptime(q4$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+
+## mosaic plot of Q3 and Q4
 > mosaicplot(table(q3$hour, q3$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
 > mosaicplot(table(q4$hour, q4$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
 
+## make subset "bat" containing variables "wd", "hour" and "season"
+> q3$season <- "3"
+> q4$season <- "4"
+> dat <- bind_rows(q3[,15:17], q4[,15:17])
+
+## hours distribution by comparing Q3 & Q4
+> ggplot(dat, aes(x = hour, fill = season)) +
++ geom_histogram(binwidth = .5, alpha = .5, position = "identity") +
++ ggtitle('hour distribution between Q3 & Q4 (overlap)')
+
+## weekdays distribution by comparing Q3 & Q4
+> ggplot(data = dat) +
++ geom_bar(mapping = aes(x = wd, fill = season), position = "dodge") +
++ ggtitle('weekdays distribution between Q3 & Q4 (side by side)')

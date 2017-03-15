@@ -167,7 +167,6 @@ Source: local data frame [63 x 10]
    Sunday       Sum 
      5783     43202 
 
-
 ## two sample proportion test supports that percentage of bike share customers did increase from Q3 tp Q4
 > prop.test(x=c(7526+7154, 5973+5783), n=c(55439, 43202))
 
@@ -187,4 +186,10 @@ sample estimates:
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q3, alpha = 0.5, color = 'orange')
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q4, alpha = 0.5, color = 'blue')
 		
+> q3$wd <- weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))
+> q4$wd <- weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))
+> q3$hour <- strptime(q3$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+> q4$hour <- strptime(q4$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+> mosaicplot(table(q3$hour, q3$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
+> mosaicplot(table(q4$hour, q4$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
 

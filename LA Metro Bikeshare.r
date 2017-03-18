@@ -236,3 +236,11 @@ g <- ggmap(dtla)
 +   geom_point(data = fluid_q4, aes(x = lon, y = lat), color = "black", size = 1) +
 +   geom_line(data = fluid_q4, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
 +   ggtitle('Fluid map for Q4')
+
+## try to make dicision tree onto Q3 dataset
+> n <- sort(sample(dim(q3)[1], 0.7*dim(q3)[1]))
+> training <- q3[n,]
+> testing <- q3[-n,]
+
+> library(rpart)
+> 

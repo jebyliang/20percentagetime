@@ -238,6 +238,17 @@ g <- ggmap(dtla)
 +   ggtitle('Fluid map for Q4')
 
 ## try to make dicision tree onto Q3 dataset
+> q3 <- read.csv("~/desktop/metrobike/Q3_2016.csv", header = T)
+
+> q3$start_wd <- weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))
+> q3$end_wd <- weekdays(strptime(q3$end_time, format = '%m/%d/%Y %H:%M'))
+> q3$start_hour <- strptime(q3$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+> q3$end_hour <- strptime(q3$end_time, format = '%m/%d/%Y %H:%M')[[3]]
+
+> q3 <- q3[,-c(1,3,4,6,7,9,10,11)]
+> str(q3)
+		
+> set.seed(1)		
 > n <- sort(sample(dim(q3)[1], 0.7*dim(q3)[1]))
 > training <- q3[n,]
 > testing <- q3[-n,]

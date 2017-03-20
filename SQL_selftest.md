@@ -1,8 +1,6 @@
 # 1. UPDATE
 
-INSERT INTO table1(column1, column2, column3,...)
-
-VALUES(value1, value2, value3,...)
+INSERT INTO table1(column1, column2, column3,...)  VALUES(value1, value2, value3,...)
 
 INSRRT INTO table1(column1, column2, column3,...)
 SELECT column1, column2... FROM table2

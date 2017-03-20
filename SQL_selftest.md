@@ -1,27 +1,27 @@
 1. UPDATE
 
-INSERT INTO table1(column1, column2, column3,...)
-VALUES(value1, value2, value3,...)
+# INSERT INTO table1(column1, column2, column3,...)
+# VALUES(value1, value2, value3,...)
 
-INSRRT INTO table1(column1, column2, column3,...)
-SELECT column1, column2... FROM table2
-WHERE conditions
+# INSRRT INTO table1(column1, column2, column3,...)
+# SELECT column1, column2... FROM table2
+# WHERE conditions
 
-UPDATE table1
-SET column1 = value1, column2 = value2...
-WHERE conditions
+# UPDATE table1
+# SET column1 = value1, column2 = value2...
+# WHERE conditions
 
-DELETE FROM table1
-WHERE conditions
+# DELETE FROM table1
+# WHERE conditions
 
-TRUNCATE TABLE table1
+# TRUNCATE TABLE table1
 
 
 2. SELECT STATEMENTS
 
-SELECT * FROM table1
+# SELECT * FROM table1
 
-SELECT column1, column2 FROM table1
+# SELECT column1, column2 FROM table1
 
 SELECT column1, column2 FROM table1
 WHERE conditions

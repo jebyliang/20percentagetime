@@ -73,16 +73,33 @@ for (i in 1:dim(duplicate_viewer_buyer_2)[1]){
   duplicate_viewer_buyer_2$model_buy[i] <- paste(trans$model_bought[which(duplicate_viewer_buyer_2$visitor_key[i] == trans$visitor_key)], collapse = ", ")
 }
 
-> head(duplicate_viewer_buyer_2)
+trans$model_bought <- ifelse(is.na(trans$model_bought), "", trans$model_bought)
+duplicate_viewer_buyer_2$affect <- 0
+ptm <- proc.time()
+for (i in 1:dim(duplicate_viewer_buyer_2)[1]){
+  n <- which(duplicate_viewer_buyer_2$visitor_key[i] == trans$visitor_key)
+  for (j in 1:length(n)){
+    if (grepl(trans$model_bought[n[j]], duplicate_viewer_buyer_2$model_view[i], ignore.case = T)) duplicate_viewer_buyer_2$affect[i] <- 1
+  }
+}
+
+colnames(duplicate_viewer_buyer_2)[2:3] <- c("view","buy")
+head(duplicate_viewer_buyer_2)
 # A tibble: 6 × 6
-    visitor_key   n.x   n.y         model_view   model_buy
-          <dbl> <int> <int>              <chr>       <chr>
-1 -9.221278e+18     2     1       Avalon, RAV4  Highlander
-2 -9.218915e+18     2     1      -1, SLK-Class    Santa Fe
-3 -9.218544e+18     2     1     Mazda6, Passat      MAZDA3
-4 -9.217534e+18     2     2       Prius, Prius Prius, QX60
-5 -9.216948e+18     2     1   Impreza, Impreza     Impreza
-6 -9.216668e+18     2     1 2 Series, 2 Series      Cooper
+    visitor_key  view   buy         model_view   model_buy affect
+          <dbl> <int> <int>              <chr>       <chr>  <dbl>
+1 -9.221278e+18     2     1       Avalon, RAV4  Highlander      0
+2 -9.218915e+18     2     1      -1, SLK-Class    Santa Fe      0
+3 -9.218544e+18     2     1     Mazda6, Passat      MAZDA3      0
+4 -9.217534e+18     2     2       Prius, Prius Prius, QX60      1
+5 -9.216948e+18     2     1   Impreza, Impreza     Impreza      1
+6 -9.216668e+18     2     1 2 Series, 2 Series      Cooper      0
+  
+sum(duplicate_viewer_buyer_2$affect)/dim(duplicate_viewer_buyer_2)[1]
+[1] 0.6822232
+# It suggests that 68.2% of "act rashly customers"(only view online twice) will be affected by Edmunds.com and bought their vehicle(s) right after checking online.
+  
+
 
 
 

@@ -57,6 +57,14 @@ head(df1)
 
 fivenum(shop_duplicate_viewer_count$n)
 [1]    2    2    3    5 1033
-# It seems that most of customer made their decision to purchase without any double online.
+# It seems that most of customer made their decision to purchase without double check online. And we are interested in whether edmunds have affect these customers' decision or not
+
+duplicate_viewer_buyer <- inner_join(shop_duplicate_viewer_count, trans_buyer_count, "visitor_key")
+duplicate_viewer_buyer_2 <- duplicate_viewer_buyer[which(duplicate_viewer_buyer$n.x == 2),]
+# we filter out the customers who use Edmunds 2 times then make their decision to buy vehivle(s)， “act rashly customers”
+
+
+
+
 
 

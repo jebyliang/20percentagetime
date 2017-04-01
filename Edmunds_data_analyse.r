@@ -63,7 +63,15 @@ duplicate_viewer_buyer <- inner_join(shop_duplicate_viewer_count, trans_buyer_co
 duplicate_viewer_buyer_2 <- duplicate_viewer_buyer[which(duplicate_viewer_buyer$n.x == 2),]
 # we filter out the customers who use Edmunds 2 times then make their decision to buy vehivle(s)， “act rashly customers”
 
+duplicate_viewer_buyer_2$model_view <- NA
+for (i in 1:dim(duplicate_viewer_buyer_2)[1]){
+  duplicate_viewer_buyer_2$model_view[i] <- paste(shop_duplicate_viewer$model_name[which(duplicate_viewer_buyer_2$visitor_key[i] == shop_duplicate_viewer$visitor_key)], collapse = ", ")
+}
 
+duplicate_viewer_buyer_2$model_buy <- NA
+for (i in 1:dim(duplicate_viewer_buyer_2)[1]){
+  duplicate_viewer_buyer_2$model_buy[i] <- paste(trans$model_bought[which(duplicate_viewer_buyer_2$visitor_key[i] == trans$visitor_key)], collapse = ", ")
+}
 
 
 

@@ -55,8 +55,6 @@ head(df1)
 5  6.916420e+18   252     1
 6 -8.325605e+18   246     1
 
-fivenum(shop_duplicate_viewer_count$n)
-[1]    2    2    3    5 1033
 # It seems that most of customer made their decision to purchase without double check online. And we are interested in whether edmunds have affect these customers' decision or not
 
 duplicate_viewer_buyer <- inner_join(shop_duplicate_viewer_count, trans_buyer_count, "visitor_key")
@@ -113,5 +111,36 @@ head(view_less_than_buy)
 5 -4.023446e+18     3     4
 6 -3.902019e+18     3     4
 # Here is a list of customers who obtains number of view on Edmunds less than number of vehicle bought
+
+# create function to provide convenience for choosing critical number of view on Edmunds.com
+deplicated_vnb <- function(n, duplicate_viewer_buyer, shop_duplicate_viewer, trans){
+  duplicate_viewer_buyer_n <- duplicate_viewer_buyer[which(duplicate_viewer_buyer$View <= n),]
+  
+  duplicate_viewer_buyer_n$model_view <- NA
+  for (i in 1:dim(duplicate_viewer_buyer_n)[1]){
+  duplicate_viewer_buyer_n$model_view[i] <- paste(shop_duplicate_viewer$model_name[which(duplicate_viewer_buyer_n$visitor_key[i] == shop_duplicate_viewer$visitor_key)], collapse = ", ")
+  }
+  
+  duplicate_viewer_buyer_n$affect <- 0
+  for (i in 1:dim(duplicate_viewer_buyer_n)[1]){
+    n <- which(duplicate_viewer_buyer_n$visitor_key[i] == trans$visitor_key)
+    for (j in 1:length(n)){
+      if (grepl(trans$model_bought[n[j]], duplicate_viewer_buyer_n$model_view[i], ignore.case = T)) duplicate_viewer_buyer_n$affect[i] <- 1
+    }
+  }
+  
+  return(sum(duplicate_viewer_buyer_n$affect)/dim(duplicate_viewer_buyer_n)[1])
+}
+
+fivenum(shop_duplicate_viewer_count$n)
+[1]    2    2    3    5 1033
+  
+deplicated_vnb(3, duplicate_viewer_buyer, shop_duplicate_viewer, trans)
+[1] 0.6975607
+# 69.8% customers who viewed 3 times or less on Edmunds.com, would tend to purchase the same models from the market
+
+deplicated_vnb(5, duplicate_viewer_buyer, shop_duplicate_viewer, trans)
+[1] 0.7129588
+# 71.3% customers who viewed 5 times or less on Edmunds.com, would tend to purchase the same models from the market
 
 

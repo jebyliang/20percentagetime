@@ -100,6 +100,18 @@ sum(duplicate_viewer_buyer_2$affect)/dim(duplicate_viewer_buyer_2)[1]
 # It suggests that 68.2% of "act rashly customers"(only view online twice) will be affected by Edmunds.com and bought their vehicle(s) right after checking online.
   
 
-
+view_less_than_buy <- duplicate_viewer_buyer[which(duplicate_viewer_buyer$n.x<duplicate_viewer_buyer$n.y),]
+colnames(view_less_than_buy)[2:3] <- c("View","Buy")
+head(view_less_than_buy)
+# A tibble: 6 × 3
+    visitor_key  View   Buy
+          <dbl> <int> <int>
+1 -1.889510e+18     5     6
+2 -8.175485e+18     3     4
+3 -7.737229e+18     3     4
+4 -6.748331e+18     3     5
+5 -4.023446e+18     3     4
+6 -3.902019e+18     3     4
+# Here is a list of customers who obtains number of view on Edmunds less than number of vehicle bought
 
 

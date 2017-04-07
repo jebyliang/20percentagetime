@@ -115,11 +115,11 @@ sample estimates:
 ## and amount of bikeshare users is decreasing at the same time, implying bikeshare doesn't become more popular, which is a bad signal for the program.
 
 ## here is list of top 10 busy stations for Q3
-> q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
-> colnames(q3_busy) <- c("Station.ID", "Use.Count")
-> q3_busy$Station.ID <- as.character(q3_busy$Station.ID)
-> stations$Station.ID <- as.character(stations$Station.ID)
-> left_join(q3_busy, stations, by = "Station.ID")[1:10,]
+q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+colnames(q3_busy) <- c("Station.ID", "Use.Count")
+q3_busy$Station.ID <- as.character(q3_busy$Station.ID)
+stations$Station.ID <- as.character(stations$Station.ID)
+left_join(q3_busy, stations, by = "Station.ID")[1:10,]
 Source: local data frame [10 x 5]
 
    Station.ID Use.Count                 Station.Name
@@ -136,10 +136,10 @@ Source: local data frame [10 x 5]
 10       3035      1483  Figueroa & 8th  
 
 ## here is list of top 10 busy stations for Q4
-> q4_busy <- q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
-> colnames(q4_busy) <- c("Station.ID", "Use.Count")
-> q4_busy$Station.ID <- as.character(q4_busy$Station.ID)
-> left_join(q4_busy, stations, by = "Station.ID")[1:10]
+q4_busy <- q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+colnames(q4_busy) <- c("Station.ID", "Use.Count")
+q4_busy$Station.ID <- as.character(q4_busy$Station.ID)
+left_join(q4_busy, stations, by = "Station.ID")[1:10]
 Source: local data frame [63 x 10]
 
    Station.ID Use.Count                 Station.Name
@@ -155,10 +155,28 @@ Source: local data frame [63 x 10]
 9        3022      1280  3rd & Santa Fe             
 10       3055      1161  7th & Main
 
+q1_busy <- q1 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
+colnames(q1_busy) <- c("Station.ID", "Use.Count")
+left_join(q1_busy, stations, by = "Station.ID")[1:10,1:3]
+# A tibble: 10 × 3
+   Station.ID Use.Count                 Station.Name
+        <int>     <int>                       <fctr>
+1        3082      1460  Traction & Rose            
+2        3069      1381  Broadway & 3rd             
+3        3005      1250  Flower & 7th               
+4        3030      1243  Main & 1st                 
+5        3064      1242  Grand & 7th                
+6        3031      1154  7th & Spring               
+7        3022      1087  3rd & Santa Fe             
+8        3042      1066  1st & Central              
+9        3014      1051  Union Station West Portal  
+10       3068      1002  Grand & 3rd 
+
 ## change of top 10 busy station from q3 to q4
-> q3_busy <- left_join(q3_busy, stations, by = "Station.ID")[1:10,]
-> q4_busy <- left_join(q4_busy, stations, by = "Station.ID")[1:10,]
-> data.frame(q3_busy$Station.Name, q4_busy$Station.Name)
+q3_busy <- left_join(q3_busy, stations, by = "Station.ID")[1:10,]
+q4_busy <- left_join(q4_busy, stations, by = "Station.ID")[1:10,]
+q1_busy <- left_join(q1_busy, stations, by = "Station.ID")[1:10,1:3]
+data.frame(q3_busy$Station.Name, q4_busy$Station.Name)
            q3_busy.Station.Name         q4_busy.Station.Name
 1   Main & 1st                   Flower & 7th               
 2   Broadway & 3rd               Traction & Rose            

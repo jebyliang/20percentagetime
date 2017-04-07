@@ -1,38 +1,55 @@
-> q3 <- read.csv("~/desktop/metrobike/Q3_2016.csv", header = T)
-> q4 <- read.csv("~/desktop/metrobike/Q4_2016.csv", header = T)
-> stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
+q3 <- read.csv("~/desktop/github/metrobike/Q3_2016.csv", header = T)
+q4 <- read.csv("~/desktop/github/metrobike/Q4_2016.csv", header = T)
+q1 <- read.csv("~/desktop/github/metrobike/Q1_2017.csv", header = T)
+stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
 
-> sum(is.na(q3$end_lat))
-> sum(is.na(q3$end_lon))
+sum(is.na(q3$end_lat))
+sum(is.na(q3$end_lon))
 
-> sum(is.na(q4$end_lat))
-> sum(is.na(q4$end_lon))
+sum(is.na(q4$end_lat))
+sum(is.na(q4$end_lon))
 ## 487 bikes are stolen in Q4 2016 because no location ending record
 
-> addmargins(table(q3$trip_route_category))
+sum(is.na(q1$end_lat))
+[1] 564
+sum(is.na(q1$end_lon))
+[1] 564
+## 564 bikes are stolen in Q4 2016 because no location ending record
+
+addmargins(table(q3$trip_route_category))
 
    One Way Round Trip        Sum 
      49827       5612      55439 
      
-> addmargins(table(q4$trip_route_category))
+addmargins(table(q4$trip_route_category))
 
    One Way Round Trip        Sum 
      39172       4030      43202 
 ## amount of bike share customers descrease from Q3 to Q4, one of potential explanation is people seems like to have a taste about what LA metro bike looks like.
 
-> prop.table(table(q3$trip_route_category))
+addmargins(table(q1$trip_route_category))
+
+   One Way Round Trip        Sum 
+     30643       3143      33786 
+
+prop.table(table(q3$trip_route_category))
 
    One Way Round Trip 
  0.8987716  0.1012284 
  
-> prop.table(table(q4$trip_route_category))
+prop.table(table(q4$trip_route_category))
 
    One Way Round Trip 
 0.90671728 0.09328272
 
 ## percentage of one way customers seems increase, apply the two sample proportion test.
 
-> prop.test(x=c(49827, 39172), n=c(55439, 43202))
+prop.table(table(q1$trip_route_category))
+
+   One Way Round Trip 
+ 0.9069733  0.0930267 
+
+prop.test(x=c(49827, 39172), n=c(55439, 43202))
 
 	2-sample test for equality of proportions
 	with continuity correction
@@ -48,19 +65,26 @@ sample estimates:
 
 ## result suggest that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
 
-> addmargins(table(q3$passholder_type))
+addmargins(table(q3$passholder_type))
 
    Flex Pass Monthly Pass      Walk-up          Sum 
         4431        33216        17792        55439 
 	
-> addmargins(table(q4$passholder_type))
+addmargins(table(q4$passholder_type))
 
    Flex Pass Monthly Pass Staff Annual      Walk-up       Sum
         2794        27081          382        12945     43202          
 
 ## Bike share program provider one more subscription option called "Staff Annual", which is unpublized.
+		
+addmargins(table(q1$passholder_type))
 
-> prop.test(x=c(17792, 12945), n=c(55439, 43202))
+   Flex Pass Monthly Pass      Walk-up          Sum 
+        2292        21007        10487        33786 
+
+## the new subscription option "Staff Annual" was cancelled
+
+prop.test(x=c(17792, 12945), n=c(55439, 43202))
 
 	2-sample test for equality of proportions
 	with continuity correction
@@ -75,6 +99,22 @@ sample estimates:
 0.3209293 0.2996389 
 
 ## two sample proportion test suggest that the percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.
+
+prop.test(x=c(12945, 10487), n=c(43202, 33786))
+
+	2-sample test for equality of proportions with continuity
+	correction
+
+data:  c(12945, 10487) out of c(43202, 33786)
+X-squared = 10.309, df = 1, p-value = 0.001324
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.017339549 -0.004172316
+sample estimates:
+   prop 1    prop 2 
+0.2996389 0.3103948
+
+## two sample proportion test supports that proportion of walk-up user 
 
 ## here is list of top 10 busy stations for Q3
 > q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))

@@ -7,7 +7,9 @@ sum(is.na(q3$end_lat))
 sum(is.na(q3$end_lon))
 
 sum(is.na(q4$end_lat))
+[1] 487
 sum(is.na(q4$end_lon))
+[1] 487
 ## 487 bikes are stolen in Q4 2016 because no location ending record
 
 sum(is.na(q1$end_lat))
@@ -41,7 +43,6 @@ prop.table(table(q4$trip_route_category))
 
    One Way Round Trip 
 0.90671728 0.09328272
-
 ## percentage of one way customers seems increase, apply the two sample proportion test.
 
 prop.table(table(q1$trip_route_category))
@@ -62,8 +63,7 @@ alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2 
 0.8987716 0.9067173
-
-## result suggest that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
+## q3 vs q4, result supports that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
 
 addmargins(table(q3$passholder_type))
 
@@ -74,14 +74,12 @@ addmargins(table(q4$passholder_type))
 
    Flex Pass Monthly Pass Staff Annual      Walk-up       Sum
         2794        27081          382        12945     43202          
-
 ## Bike share program provider one more subscription option called "Staff Annual", which is unpublized.
 		
 addmargins(table(q1$passholder_type))
 
    Flex Pass Monthly Pass      Walk-up          Sum 
         2292        21007        10487        33786 
-
 ## the new subscription option "Staff Annual" was cancelled
 
 prop.test(x=c(17792, 12945), n=c(55439, 43202))
@@ -97,8 +95,7 @@ alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2 
 0.3209293 0.2996389 
-
-## two sample proportion test suggest that the percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.
+## q3 vs q4, percentage of walk-up users did decrease, one potential explanation is customers begin to realize the convenience of riding bike, so they tranfer into pass subscription users.
 
 prop.test(x=c(12945, 10487), n=c(43202, 33786))
 
@@ -114,7 +111,8 @@ sample estimates:
    prop 1    prop 2 
 0.2996389 0.3103948
 
-## two sample proportion test supports that proportion of walk-up user 
+## q4 vs q1, two sample proportion test supports that proportion of walk-up user increase, 
+## and amount of bikeshare users is decreasing at the same time, implying bikeshare doesn't become more popular, which is a bad signal for the program.
 
 ## here is list of top 10 busy stations for Q3
 > q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
@@ -173,7 +171,7 @@ Source: local data frame [63 x 10]
 9   3rd & Santa Fe               3rd & Santa Fe             
 10  Figueroa & 8th               7th & Main  
 
-## check out which bike stations are easy to be stolen bicycle
+## check out which bike stations are easy to be stolen bicycle in Q4 2016
 > sort(table(q4$start_station_id[which(is.na(q4$end_lat)==T)]), decreasing=T)
 
 3062 3082 3064 3005 3069 3006 3031 3038 3042 3037 
@@ -191,23 +189,43 @@ Source: local data frame [63 x 10]
 3080 3081 4108 
    0    0    0 
 
-## day of week distribution for Q3
-> addmargins(table(weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
+
+sort(table(q1$start_station_id[which(is.na(q1$end_lat)==T)]), decreasing=T)
+
+3062 3082 3022 3064 3069 3031 3042 3063 3014 3048 3047 3005 3006 3007 3049 
+  32   29   26   25   25   19   19   18   17   17   16   14   13   13   13 
+3058 3030 3051 3055 3068 3067 3037 3035 3038 3066 3075 3008 3023 3052 3065 
+  13   12   12   12   12   11   10    9    9    9    9    8    8    8    8 
+3074 3027 3034 3040 3077 3000 3016 3025 3036 3057 3076 3078 3011 3018 3019 
+   8    7    7    6    6    5    5    5    5    5    5    5    4    4    4 
+3024 3026 3029 3032 3046 3054 3079 3020 3028 3056 3060 3009 3033 3045 3080 
+   4    4    4    4    3    3    3    2    2    2    2    1    1    1    1
+
+## day of week distribution for Q3 2016
+addmargins(table(weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
 
    Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
      7064      7939      7919      8823      9014      7526 
    Sunday       Sum 
      7154     55439
 
-## day of week distribution for Q4
-> addmargins(table(weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
+## day of week distribution for Q4 2016
+addmargins(table(weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
 
    Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
      5852      6362      6569      6412      6251      5973 
    Sunday       Sum 
      5783     43202 
 
-## two sample proportion test supports that percentage of bike share customers did increase from Q3 tp Q4
+## day of week distribution for Q1 2017
+addmargins(table(weekdays(strptime(q1$start_time, format = '%m/%d/%Y %H:%M'))))[c(2,6,7,5,1,3,4,8)]
+
+   Monday   Tuesday Wednesday  Thursday    Friday  Saturday    Sunday 
+     4335      4835      5331      5110      4778      5031      4366 
+      Sum 
+    33786 
+
+## two sample proportion test supports that percentage of bike share customers at weekend did increase from Q3 tp Q4
 > prop.test(x=c(7526+7154, 5973+5783), n=c(55439, 43202))
 
 	2-sample test for equality of proportions with
@@ -221,6 +239,21 @@ alternative hypothesis: two.sided
 sample estimates:
    prop 1    prop 2 
 0.2647955 0.2721170 
+
+## proportion of bikeshare program user at weekend doesn't change from Q4 2016 to Q1 2017
+prop.test(x=c(5973+5783, 5031+4366), n=c(43202, 33786))
+
+	2-sample test for equality of proportions with continuity
+	correction
+
+data:  c(5973 + 5783, 5031 + 4366) out of c(43202, 33786)
+X-squared = 3.4133, df = 1, p-value = 0.06467
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.0124015486  0.0003697029
+sample estimates:
+  prop 1   prop 2 
+0.272117 0.278133 
 
 > dtla <- get_map(location = 'Downtown LA', zoom = 14)
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q3, alpha = 0.5, color = 'orange')
@@ -293,5 +326,4 @@ g <- ggmap(dtla)
 > training <- q3[n,]
 > testing <- q3[-n,]
 
-> library(rpart)
-> 
+

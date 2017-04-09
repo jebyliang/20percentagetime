@@ -65,6 +65,21 @@ sample estimates:
 0.8987716 0.9067173
 ## q3 vs q4, result supports that percentage of one way customer did increase, potential explanation is people are laready familiar with various bike stations other than the original one.
 
+prop.test(x=c(39172, 30643), n=c(43202, 33786))
+
+	2-sample test for equality of proportions with continuity
+	correction
+
+data:  c(39172, 30643) out of c(43202, 33786)
+X-squared = 0.011834, df = 1, p-value = 0.9134
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.004419298  0.003907256
+sample estimates:
+   prop 1    prop 2 
+0.9067173 0.9069733 
+## q4 vs q1, proportion of one way user did not change
+
 addmargins(table(q3$passholder_type))
 
    Flex Pass Monthly Pass      Walk-up          Sum 
@@ -119,7 +134,7 @@ q3_busy <- q3 %>% group_by(start_station_id) %>% count(start_station_id) %>% arr
 colnames(q3_busy) <- c("Station.ID", "Use.Count")
 q3_busy$Station.ID <- as.character(q3_busy$Station.ID)
 stations$Station.ID <- as.character(stations$Station.ID)
-left_join(q3_busy, stations, by = "Station.ID")[1:10,]
+left_join(q3_busy, stations, by = "Station.ID")[1:10,1:3]
 Source: local data frame [10 x 5]
 
    Station.ID Use.Count                 Station.Name
@@ -139,7 +154,7 @@ Source: local data frame [10 x 5]
 q4_busy <- q4 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
 colnames(q4_busy) <- c("Station.ID", "Use.Count")
 q4_busy$Station.ID <- as.character(q4_busy$Station.ID)
-left_join(q4_busy, stations, by = "Station.ID")[1:10]
+left_join(q4_busy, stations, by = "Station.ID")[1:10,1:3]
 Source: local data frame [63 x 10]
 
    Station.ID Use.Count                 Station.Name
@@ -157,6 +172,7 @@ Source: local data frame [63 x 10]
 
 q1_busy <- q1 %>% group_by(start_station_id) %>% count(start_station_id) %>% arrange(desc(n))
 colnames(q1_busy) <- c("Station.ID", "Use.Count")
+q1_busy$Station.ID <- as.character(q1_busy$Station.ID)
 left_join(q1_busy, stations, by = "Station.ID")[1:10,1:3]
 # A tibble: 10 × 3
    Station.ID Use.Count                 Station.Name
@@ -172,22 +188,22 @@ left_join(q1_busy, stations, by = "Station.ID")[1:10,1:3]
 9        3014      1051  Union Station West Portal  
 10       3068      1002  Grand & 3rd 
 
-## change of top 10 busy station from q3 to q4
-q3_busy <- left_join(q3_busy, stations, by = "Station.ID")[1:10,]
-q4_busy <- left_join(q4_busy, stations, by = "Station.ID")[1:10,]
+## change of top 10 busy station from q3 to q1
+q3_busy <- left_join(q3_busy, stations, by = "Station.ID")[1:10,1:3]
+q4_busy <- left_join(q4_busy, stations, by = "Station.ID")[1:10,1:3]
 q1_busy <- left_join(q1_busy, stations, by = "Station.ID")[1:10,1:3]
-data.frame(q3_busy$Station.Name, q4_busy$Station.Name)
-           q3_busy.Station.Name         q4_busy.Station.Name
-1   Main & 1st                   Flower & 7th               
-2   Broadway & 3rd               Traction & Rose            
-3   Union Station West Portal    Broadway & 3rd             
-4   Flower & 7th                 Main & 1st                 
-5   7th & Spring                 7th & Spring               
-6   Grand & 7th                  Grand & 7th                
-7   1st & Central                Union Station West Portal  
-8   Main & 6th                   Main & 6th                 
-9   3rd & Santa Fe               3rd & Santa Fe             
-10  Figueroa & 8th               7th & Main  
+> data.frame(q3_busy$Station.Name, q4_busy$Station.Name, q1_busy$Station.Name)
+           q3_busy.Station.Name         q4_busy.Station.Name         q1_busy.Station.Name
+1   Main & 1st                   Flower & 7th                 Traction & Rose            
+2   Broadway & 3rd               Traction & Rose              Broadway & 3rd             
+3   Union Station West Portal    Broadway & 3rd               Flower & 7th               
+4   Flower & 7th                 Main & 1st                   Main & 1st                 
+5   7th & Spring                 7th & Spring                 Grand & 7th                
+6   Grand & 7th                  Grand & 7th                  7th & Spring               
+7   1st & Central                Union Station West Portal    3rd & Santa Fe             
+8   Main & 6th                   Main & 6th                   1st & Central              
+9   3rd & Santa Fe               3rd & Santa Fe               Union Station West Portal  
+10  Figueroa & 8th               7th & Main                   Grand & 3rd  
 
 ## check out which bike stations are easy to be stolen bicycle in Q4 2016
 > sort(table(q4$start_station_id[which(is.na(q4$end_lat)==T)]), decreasing=T)
@@ -277,14 +293,17 @@ sample estimates:
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q3, alpha = 0.5, color = 'orange')
 > ggmap(dtla) + geom_point(aes(x=start_lon, y=start_lat, size = n), data = q4, alpha = 0.5, color = 'blue')
 		
-> q3$wd <- weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))
-> q4$wd <- weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))
-> q3$hour <- strptime(q3$start_time, format = '%m/%d/%Y %H:%M')[[3]]
-> q4$hour <- strptime(q4$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+q3$wd <- weekdays(strptime(q3$start_time, format = '%m/%d/%Y %H:%M'))
+q4$wd <- weekdays(strptime(q4$start_time, format = '%m/%d/%Y %H:%M'))
+q1$wd <- weekdays(strptime(q1$start_time, format = '%m/%d/%Y %H:%M'))
+q1$hour <- strptime(q1$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+q3$hour <- strptime(q3$start_time, format = '%m/%d/%Y %H:%M')[[3]]
+q4$hour <- strptime(q4$start_time, format = '%m/%d/%Y %H:%M')[[3]]
 
 ## mosaic plot of Q3 and Q4
-> mosaicplot(table(q3$hour, q3$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
-> mosaicplot(table(q4$hour, q4$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
+mosaicplot(table(q3$hour, q3$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
+mosaicplot(table(q4$hour, q4$wd), main = "Distribution of bicycle use for Q3", color = rainbow(7))
+mosaicplot(table(q1$hour, q1$wd), main = "Distribution of bicycle use for Q1", color = rainbow(7))
 
 ## make subset "bat" containing variables "wd", "hour" and "season"
 > q3$season <- "3"

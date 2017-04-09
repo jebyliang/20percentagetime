@@ -6,7 +6,7 @@
 
 ![](https://github.com/jebyliang/Images/blob/master/mosaic%20q4.png)
 
-![](https://github.com/jebyliang/Images/blob/master/q34.gif)
+![](https://github.com/jebyliang/Images/blob/master/mosaic_q3_q1.gif)
 
 ![](https://github.com/jebyliang/Images/blob/master/hour%20q34.png)
 

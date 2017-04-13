@@ -14,4 +14,4 @@
 
 ![](https://github.com/jebyliang/Images/blob/master/fluid%20Q4.png)
 
-1[](https://github.com/jebyliang/Images/blob/master/fluid%20Q1.png)
+![](https://github.com/jebyliang/Images/blob/master/fluid%20Q1.png)

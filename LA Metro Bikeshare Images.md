@@ -4,10 +4,6 @@
 
 ![Q1 2017 Stations Customers Count](https://github.com/jebyliang/Images/blob/master/q1_start.png)
 
-![](https://github.com/jebyliang/Images/blob/master/mosaic%20q3.png)
-
-![](https://github.com/jebyliang/Images/blob/master/mosaic%20q4.png)
-
 ![](https://github.com/jebyliang/Images/blob/master/mosaic_q3_q1.gif)
 
 ![](https://github.com/jebyliang/Images/blob/master/hour%20q34.png)
@@ -17,3 +13,5 @@
 ![](https://github.com/jebyliang/Images/blob/master/fluid%20Q3.png)
 
 ![](https://github.com/jebyliang/Images/blob/master/fluid%20Q4.png)
+
+1[](https://github.com/jebyliang/Images/blob/master/fluid%20Q1.png)

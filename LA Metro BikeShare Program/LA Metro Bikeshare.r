@@ -306,19 +306,26 @@ mosaicplot(table(q4$hour, q4$wd), main = "Distribution of bicycle use for Q3", c
 mosaicplot(table(q1$hour, q1$wd), main = "Distribution of bicycle use for Q1", color = rainbow(7))
 
 ## make subset "bat" containing variables "wd", "hour" and "season"
-> q3$season <- "3"
-> q4$season <- "4"
-> dat <- bind_rows(q3[,15:17], q4[,15:17])
+q3$season <- "3"
+q4$season <- "4"
+q1$season <- "1"
+dat <- bind_rows(q3[,15:17], q4[,15:17], q1[,15:17])
 
-## hours distribution by comparing Q3 & Q4
+## hours distribution by comparing Q3, Q4 & Q1
 > ggplot(dat, aes(x = hour, fill = season)) +
 + geom_histogram(binwidth = .5, alpha = .5, position = "identity") +
-+ ggtitle('hour distribution between Q3 & Q4 (overlap)')
++ ggtitle('hour distribution between Q3, Q4 & Q1(overlap)') +
++ theme(plot.title = element_text(hjust = 0.5))
 
-## weekdays distribution by comparing Q3 & Q4
+dat$wd <- as.factor(dat$wd)
+levels(dat$wd)
+dat$wd <- factor(dat$wd,levels(dat$wd)[c(5,6,7,1:4)])
+
+## weekdays distribution by comparing Q3, Q4 & Q1
 > ggplot(data = dat) +
 + geom_bar(mapping = aes(x = wd, fill = season), position = "dodge") +
-+ ggtitle('weekdays distribution between Q3 & Q4 (side by side)')
++ ggtitle('weekdays distribution between Q3, Q4 & Q1(side by side)') +
++ theme(plot.title = element_text(hjust = 0.5))
 
 ## save the Downtown LA map
 dtla <- get_map(location = 'Downtown LA', zoom = 14)

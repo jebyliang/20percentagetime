@@ -8,7 +8,7 @@
 
 ![](https://github.com/jebyliang/Images/blob/master/hour%20q341.png)
 
-![](https://github.com/jebyliang/Images/blob/master/weekdays%20q341.png)
+![](https://github.com/jebyliang/Images/blob/master/weekdays%20q341_new.png)
 
 ![](https://github.com/jebyliang/Images/blob/master/fluid%20Q3.png)
 

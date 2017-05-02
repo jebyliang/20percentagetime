@@ -327,32 +327,23 @@ dat$wd <- factor(dat$wd,levels(dat$wd)[c(5,6,7,1:4)])
 + ggtitle('weekdays distribution between Q3, Q4 & Q1(side by side)') +
 + theme(plot.title = element_text(hjust = 0.5))
 
-## save the Downtown LA map
-dtla <- get_map(location = 'Downtown LA', zoom = 14)
-g <- ggmap(dtla)
+## let's get the fluid map
+fluidmap <- function(df){
+  library(ggmap)
+  df$wd <- weekdays(strptime(df$start_time, format = '%m/%d/%Y %H:%M'))
+  dtla <- get_map(location = 'Downtown LA', zoom = 14)
+  g <- ggmap(dtla)
+  fluid <- data.frame(lat = c(df$start_lat, df$end_lat),
+                       lon = c(df$start_lon, df$end_lon),
+                       case = as.character(rep(1:dim(df)[1], 2)),
+                       wd = rep(df$wd, 2))
+  g + 
+  facet_wrap(~ wd, ncol = 4) +
+  geom_point(data = fluid, aes(x = lon, y = lat), color = "black", size = 1) +
+  geom_line(data = fluid, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
+  ggtitle('Bicycle Flow Map') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position="none")
+}
 
-## let's get the fluid map for Q3
-> fluid_q3 <- data.frame(lat = c(q3$start_lat, q3$end_lat),
-+ lon = c(q3$start_lon, q3$end_lon),
-+ case = as.character(rep(1:dim(q3)[1], 2)),
-+ wd = rep(q3$wd, 2))
-
-> g + 
-+   facet_wrap(~ wd, ncol = 2) +
-+   geom_point(data = fluid_q3, aes(x = lon, y = lat), color = "black", size = 1) +
-+   geom_line(data = fluid_q3, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
-+   ggtitle('Fluid map for Q3')
-
-> fluid_q4 <- data.frame(lat = c(q4$start_lat, q4$end_lat),
-+ lon = c(q4$start_lon, q4$end_lon),
-+ case = as.character(rep(1:dim(q4)[1], 2)),
-+ wd = rep(q4$wd, 2))
-
-> g + 
-+   facet_wrap(~ wd, ncol = 2) +
-+   geom_point(data = fluid_q4, aes(x = lon, y = lat), color = "black", size = 1) +
-+   geom_line(data = fluid_q4, aes(x = lon, y = lat, group = case, color = wd), size = 0.01) +
-+   ggtitle('Fluid map for Q4')
-
-
-
+fluidmap(q3) ## or q4 & q1

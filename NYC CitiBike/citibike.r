@@ -18,3 +18,13 @@ mar$hour <- strptime(mar$`Start Time`, format = '%Y-%m-%d %H:%M:%S')[[3]]
 mosaicplot(table(jan$hour, jan$wd)[,c(2,6,7,5,1,3,4)], main = "Distribution of Bicycle Use in January 2017", color = rainbow(7), off = F, las = 1)
 mosaicplot(table(feb$hour, feb$wd)[,c(2,6,7,5,1,3,4)], main = "Distribution of Bicycle Use in February 2017", color = rainbow(7), off = F, las = 1)
 mosaicplot(table(mar$hour, mar$wd)[,c(2,6,7,5,1,3,4)], main = "Distribution of Bicycle Use in March 2017", color = rainbow(7), off = F, las = 1)
+
+library(ggmap)
+nyc <- get_map(location = 'United Nations Headquarters', zoom = 13)
+g <- ggmap(nyc)
+g
+g + 
+  geom_point(data = mar, aes(x = `Start Station Longitude`, y = `Start Station Latitude`, size = n), alpha = 0.5, color = 'blue') +
+  ggtitle('Bicycle Use in Mar 2017') +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position="none")

@@ -3,6 +3,7 @@ library(readr)
 library(ggplot2)
 library(ggmap)
 
+station <- read.csv("~/Desktop/141/citibike/nyc_subway.csv", header = T)
 jan <- read_csv("~/Desktop/141/citibike/201701-citibike-tripdata.csv")
 feb <- read_csv("~/Desktop/141/citibike/201702-citibike-tripdata.csv")
 mar <- read_csv("~/Desktop/141/citibike/201703-citibike-tripdata.csv")
@@ -28,3 +29,9 @@ g +
   ggtitle('Bicycle Use in Mar 2017') +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(legend.position="none")
+
+g + 
+  geom_point(data = st1, aes(x = Station.Longitude, y = Station.Latitude), color = 'black', alpha = 0.1) +
+  geom_text(data = st1, aes(label = Station.Name, x = Station.Longitude, y = Station.Latitude), size = 2, color = "red") +
+  ggtitle('NYC Subway Stations') +
+  theme(plot.title = element_text(hjust = 0.5))

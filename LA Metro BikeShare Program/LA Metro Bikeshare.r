@@ -1,6 +1,7 @@
 q3 <- read.csv("~/desktop/github/metrobike/Q3_2016.csv", header = T)
 q4 <- read.csv("~/desktop/github/metrobike/Q4_2016.csv", header = T)
 q1 <- read.csv("~/desktop/github/metrobike/Q1_2017.csv", header = T)
+q2 <- read.csv("~/desktop/github/metrobike/Q2_2017.csv", header = T)
 stations <- read.csv("~/desktop/metrobike/metro_station_table.csv", header = T)
 
 sum(is.na(q3$end_lat))

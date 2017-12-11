@@ -49,3 +49,87 @@ dice <- function(){
     movement = sum(faces)
     return(list(faces=faces, doubles=doubles, movement=movement))
 }
+
+## check status of player to see whether it is in jail of not
+check_in_jail <- function(a, b) {
+    if (a == 31) {
+        ## step on 31, send to jail immediately
+        a <- 11
+        if (b == 0) {
+            ## if player has no jail free card
+            c <- TRUE  ## then in jail
+        } else {
+            c <- FALSE  ## else use a jail free card
+            b <- b - 1
+        }
+    } else {
+        c <- FALSE  ## safely landed on except 31
+    }
+    ## return 3 variables, 1)current location, 2)number of jail free cards, 3)in
+    ## jail or not
+    return(list(space = a, jail_free = b, jail = c))
+}
+
+## draw card from community deck
+community_deck <- function(a, b) {
+    card <- sample(16, 1)
+    if (card == 1) {
+        ## advance to go
+        a <- 1
+    } else if (card == 2) {
+        ## advance to 'go to jail', then to the jail
+        a <- 31
+    } else if (card == 6) {
+        ## get a jail free card
+        b <- b + 1
+    }
+    ## return 2 variables, 1)current location, 2)number of jail free cards
+    return(list(space = a, jail_free = b))
+}
+
+
+
+
+
+## draw card from chance deck
+chance_deck <- function(a, b) {
+    card <- sample(15, 1)
+    if (card == 1) {
+        ## advance to go
+        a <- 1
+    } else if (card == 2) {
+        ## advance to Illinois avenue
+        a <- 25
+    } else if (card == 3) {
+        ## advance to St. Charles Place
+        a <- 12
+    } else if (card == 4) {
+        ## move to nearest Utility
+        if (a == 23) {
+            a <- 29  ## move forward to Water Works
+        } else {
+            a <- 13  ## move forward to Electric Company
+        }
+    } else if (card == 5) {
+        ## move to nearest Railroad
+        if (a == 8) {
+            a <- 16  ## move forward to Pennsylvania Railroad
+        } else if (a == 23) {
+            a <- 26  ## move forward to B & O Railroad
+        } else {
+            a <- 6  ## move forward to Reading Railroad
+        }
+    } else if (card == 6) {
+        a <- 6  ## take a ride on the Reading Railroad
+    } else if (card == 7) {
+        a <- 40  ## take a walk on the Boardwalk
+    } else if (card == 8) {
+        a <- 31  ## go to 'Go to Jail', then send to jail by chenk_in_jail function
+    } else if (card == 9) {
+        a <- a - 3  ## backward 3 space
+    } else if (card == 11) {
+        b <- b + 1  ## get a jail free card without movement
+    }
+    ## return 3 variables, 1)current location, 2)
+    return(list(space = a, jail_free = b))
+}

@@ -133,3 +133,173 @@ chance_deck <- function(a, b) {
     ## return 3 variables, 1)current location, 2)
     return(list(space = a, jail_free = b))
 }
+
+gameboard$count <- 0  ## add column to count space occurence
+
+for (j in 1:2000) {
+    space <- 0  ## current location
+    jail_free <- 0  ## number of free jail card
+    jail <- FALSE  ## in jail or not
+    double_try <- 0  ## number of rolls to escape from jail
+    
+    for (i in 1:100) {
+        roll_1 <- dice()  ## 1st roll in a row
+        if (!jail) {
+            space <- space + roll_1[[3]]
+            while (space > 40) space <- space - 40
+            
+            ## draw community chest card
+            if (space == 3 | space == 18 | space == 34) {
+                card_drawn <- community_deck(space, jail_free)
+                space <- card_drawn[[1]]
+                jail_free <- card_drawn[[2]]
+            }
+            
+            ## draw chance card
+            if (space == 8 | space == 23 | space == 37) {
+                card_drawn <- chance_deck(space, jail_free)
+                space <- card_drawn[[1]]
+                jail_free <- card_drawn[[2]]
+            }
+            
+            space1 <- space
+            jail_detect <- check_in_jail(space, jail_free)
+            space <- jail_detect[[1]]
+            jail_free <- jail_detect[[2]]
+            jail <- jail_detect[[3]]
+            
+            ## if landed on 31 then move to the jail, player ends his turn immediately
+            if (space1 == 31) {
+                gameboard$count[space] <- gameboard$count[space] + 1
+                next
+            }
+            gameboard$count[space] <- gameboard$count[space] + 1
+            
+            ## if 1st roll got double and doesn't go to jail, roll dices again
+            if (roll_1[[2]]) {
+                roll_2 <- dice()  ## 2nd roll in a row
+                space <- space + roll_2[[3]]
+                while (space > 40) space <- space - 40
+                
+                if (space == 3 | space == 18 | space == 34) {
+                  card_drawn <- community_deck(space, jail_free)
+                  space <- card_drawn[[1]]
+                  jail_free <- card_drawn[[2]]
+                }
+                
+                if (space == 8 | space == 23 | space == 37) {
+                  card_drawn <- chance_deck(space, jail_free)
+                  space <- card_drawn[[1]]
+                  jail_free <- card_drawn[[2]]
+                }
+                
+                space1 <- space
+                jail_detect <- check_in_jail(space, jail_free)
+                space <- jail_detect[[1]]
+                jail_free <- jail_detect[[2]]
+                jail <- jail_detect[[3]]
+                
+                ## if landed on 31 then move to the jail, player ends his turn immediately
+                if (space1 == 31) {
+                  gameboard$count[space] <- gameboard$count[space] + 1
+                  next
+                }
+                gameboard$count[space] <- gameboard$count[space] + 1
+                
+                ## if 2nd roll also got double and doesn't go to jail, roll dices again
+                if (roll_2[[2]]) {
+                  roll_3 <- dice()  ## 3rd roll in a row
+                  if (roll_3[[2]]) {
+                    ## if 3rd roll got double, send player to jail and end this turn
+                    space <- 31
+                    jail_detect <- check_in_jail(space, jail_free)
+                    space <- jail_detect[[1]]
+                    jail_free <- jail_detect[[2]]
+                    jail <- jail_detect[[3]]
+                    gameboard$count[space] <- gameboard$count[space] + 1
+                    next
+                  } else {
+                    space <- space + roll_3[[3]]
+                    while (space > 40) space <- space - 40
+                    if (space == 3 | space == 18 | space == 34) {
+                      card_drawn <- community_deck(space, jail_free)
+                      space <- card_drawn[[1]]
+                      jail_free <- card_drawn[[2]]
+                    }
+                    if (space == 8 | space == 23 | space == 37) {
+                      card_drawn <- chance_deck(space, jail_free)
+                      space <- card_drawn[[1]]
+                      jail_free <- card_drawn[[2]]
+                    }
+                    jail_detect <- check_in_jail(space, jail_free)
+                    space <- jail_detect[[1]]
+                    jail_free <- jail_detect[[2]]
+                    jail <- jail_detect[[3]]
+                    gameboard$count[space] <- gameboard$count[space] + 1
+                    next
+                  }
+                }
+            }
+        } else {
+            ## if player in jail
+            roll_1 <- dice()
+            ## can only escape by rolling double or rolling 3 times
+            if (roll_1[[2]] | double_try == 3) {
+                space <- 11 + roll_1[[3]]
+                jail <- FALSE
+                double_try <- 0
+                gameboard$count[space] <- gameboard$count[space] + 1
+            } else {
+                ## keep staying in jail without rolling double or less then 3 times
+                double_try <- double_try + 1
+                gameboard$count[space] <- gameboard$count[space] + 1
+            }
+        }
+    }
+}
+
+gameboard$freq <- prop.table(gameboard$count)
+
+library(dplyr)
+arrange(gameboard, desc(freq))
+##    space                 title count        freq
+## 1     11                  Jail 28797 0.123460866
+## 2     25       Illinois Avenue  6724 0.028827686
+## 3      1                    Go  6566 0.028150295
+## 4     21          Free Parking  6547 0.028068837
+## 5     19      Tennessee Avenue  6488 0.027815887
+## 6     20       New York Avenue  6429 0.027562937
+## 7      6      Reading Railroad  6374 0.027327137
+## 8     17       St. James Place  6299 0.027005591
+## 9     26        B & O Railroad  6281 0.026928420
+## 10    12     St. Charles Place  6084 0.026083825
+## 11    29           Water Works  6062 0.025989505
+## 12    13      Electric Company  6009 0.025762279
+## 13    22       Kentucky Avenue  5957 0.025539340
+## 14    16 Pennsylvania Railroad  5930 0.025423583
+## 15    24        Indiana Avenue  5885 0.025230656
+## 16    27       Atlantic Avenue  5874 0.025183496
+## 17    28        Ventnor Avenue  5811 0.024913397
+## 18    32        Pacific Avenue  5777 0.024767629
+## 19    30        Marvin Gardens  5759 0.024690458
+## 20    15       Virginia Avenue  5748 0.024643298
+## 21    40             Boardwalk  5679 0.024347476
+## 22    33 North Carolina Avenue  5532 0.023717245
+## 23    18       Community Chest  5438 0.023314241
+## 24    35   Pennsylvania Avenue  5341 0.022898374
+## 25     5            Income Tax  5223 0.022392475
+## 26    36   Short Line Railroad  5217 0.022366751
+## 27     9        Vermont Avenue  5198 0.022285293
+## 28    10    Connecticut Avenue  5134 0.022010907
+## 29     7       Oriental Avenue  5120 0.021950885
+## 30    34       Community Chest  5080 0.021779394
+## 31    14         States Avenue  4983 0.021363527
+## 32     4         Baltic Avenue  4738 0.020313143
+## 33    38            Park Place  4629 0.019845829
+## 34    39            Luxury Tax  4613 0.019777233
+## 35     2  Mediterranean Avenue  4569 0.019588592
+## 36     3       Community Chest  4173 0.017890829
+## 37    23                Chance  3136 0.013444917
+## 38     8                Chance  2062 0.008840376
+## 39    37                Chance  1982 0.008497393
+## 40    31            Go to jail     0 0.000000000

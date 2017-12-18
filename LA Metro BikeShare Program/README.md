@@ -1,10 +1,10 @@
 Evaluating BikeShare Program from LA Metro
 
-2017_Q3 area of operation, usage update:\newline
-DTLA       since 7/07/2016: 51259\newline
-Port of LA since 7/31/2017: 2536\newline
-Pasadena   since 7/14/2017: 14768\newline
-Venice     since 9/07/2017: 3715\newline
+2017_Q3 area of operation, usage update:<br />
+DTLA       since 7/07/2016: 51259<br />
+Port of LA since 7/31/2017: 2536<br />
+Pasadena   since 7/14/2017: 14768<br />
+Venice     since 9/07/2017: 3715<br />
 
 Total amount of seasonl bicycles usage:\newline
 2016Q3: 55439\newline

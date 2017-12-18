@@ -15,6 +15,20 @@ Total amount of seasonl bicycles usage:\newline
 
 ![](https://github.com/jebyliang/416_FourSixteen/blob/master/LA%20Metro%20BikeShare%20Program/images/DTLA%20usage.png)
 
+2017Q3 Top 10 Bicycle stations:<br />
+ 1) 7th & Flower  2751<br />
+ 2) Grand & 7th  2179<br />
+ 3) Traction & Rose  1941<br />
+ 4) 7th & Spring  1910<br />
+ 5) Union Station West Portal  1890<br />
+ 6) Main & 1st  1704<br />
+ 7) Broadway & 3rd  1694<br />
+ 8) Grand & 3rd  1628<br />
+ 9) Main & 6th  1504<br />
+10) Figueroa & 8th  1441<br />
+
+![](https://github.com/jebyliang/416_FourSixteen/blob/master/LA%20Metro%20BikeShare%20Program/images/DTLA%20Rail%202017Q3.png)
+
 Bicycle stolen rate:<br />
 2016Q3: 0<br />
 2016Q4: 0.0112<br />

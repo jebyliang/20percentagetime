@@ -1,7 +1,26 @@
 Evaluating BikeShare Program from LA Metro
 
-1. From Q3 2016 to Q1 2017, amount of bike share users significantly drops since program launched. (55439 / 43202 / 33786)
+2017_Q3 area of operation, usage update:
+DTLA       since 7/07/2016: 51259
+Port of LA since 7/31/2017: 2536
+Pasadena   since 7/14/2017: 14768
+Venice     since 9/07/2017: 3715
 
-2. However, percentage of bicycles lost increases, 0 / 1.13% / 1.67% correspondingly.
+Total amount of seasonl bicycles usage:
+2016Q3: 55439
+2016Q4: 43202
+2017Q1: 33786
+2017Q2: 51918
+2017Q3: 72337
 
-3. Inefficient bike stations resettlement, arrange unheeded new stations but withdraw the one in demand. 
+![](https://github.com/jebyliang/416_FourSixteen/blob/master/LA%20Metro%20BikeShare%20Program/images/DTLA%20usage.png)
+
+Bicycle stolen rate:
+2016Q3: 0
+2016Q4: 0.0112
+2017Q1: 0.0167
+2017Q2: 0.0146
+2017Q3: 0.0102
+
+![](https://github.com/jebyliang/Images/blob/master/Bicycle%20Flow%20Map%20q3_q1.gif)
+

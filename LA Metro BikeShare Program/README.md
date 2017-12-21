@@ -39,10 +39,10 @@ Bicycle stolen rate:<br />
 ![](https://github.com/jebyliang/Images/blob/master/Bicycle%20Flow%20Map%20q3_q1.gif)
 
 Fun Fact in 2017Q3, bicycling accross areas:<br />
-1   Pasadena\textcolor{red}{red} TO DTLA    20<br />
-2       DTLA   Pasadena     9<br />
-3       DTLA     Venice     8<br />
-4     Venice       DTLA     5<br />
-5       DTLA Port of LA     4<br />
-6 Port of LA       DTLA     1<br />
+1)   Pasadena TO DTLA    20<br />
+2)       DTLA TO   Pasadena     9<br />
+3)       DTLA TO     Venice     8<br />
+4)     Venice TO      DTLA     5<br />
+5)       DTLA TO Port of LA     4<br />
+6) Port of LA TO      DTLA     1<br />
 

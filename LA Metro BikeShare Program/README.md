@@ -6,7 +6,7 @@ Port of LA since 7/31/2017: 2536<br />
 Pasadena   since 7/14/2017: 14768<br />
 Venice     since 9/07/2017: 3715<br />
 
-Total amount of seasonl bicycles usage:\newline
+Total amount of seasonl bicycles usage:<br />
 2016Q3: 55439<br />
 2016Q4: 43202<br />
 2017Q1: 33786<br />

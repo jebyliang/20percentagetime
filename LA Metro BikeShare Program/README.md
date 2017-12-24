@@ -29,6 +29,8 @@ Total amount of seasonl bicycles usage:<br />
 
 ![](https://github.com/jebyliang/416_FourSixteen/blob/master/LA%20Metro%20BikeShare%20Program/images/DTLA%20Rail%202017Q3.png)
 
+![](https://github.com/jebyliang/416_FourSixteen/blob/master/LA%20Metro%20BikeShare%20Program/images/DTLA%20Bicycle%20with%20factor%20elevation.gif)
+
 Bicycle stolen rate:<br />
 2016Q3: 0<br />
 2016Q4: 0.0112<br />
